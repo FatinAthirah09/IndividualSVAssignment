@@ -32,4 +32,30 @@ if not df.empty:
     
     st.markdown("---")
     
+#v1
+import pandas as pd
+import plotly.express as px
+
+# Example: load your dataset (replace with your own df if already defined)
+# df = pd.read_csv('your_dataset.csv')
+
+# Get value counts
+age_counts = df['Your Age'].value_counts().reset_index()
+age_counts.columns = ['Your Age', 'Count']
+
+# Create Plotly Pie Chart
+fig = px.pie(
+    age_counts,
+    names='Your Age',
+    values='Count',
+    title='Distribution of Respondent Age',
+    color_discrete_sequence=px.colors.qualitative.Pastel
+)
+
+# Customize labels and layout
+fig.update_traces(textposition='inside', textinfo='percent+label')
+fig.update_layout(showlegend=False)
+
+# Show interactive chart
+fig.show()
 
