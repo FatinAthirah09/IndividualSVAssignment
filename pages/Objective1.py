@@ -1,71 +1,68 @@
 import streamlit as st
 import plotly.express as px
-import pandas as pd
 from app_helpers import load_data
 
 # --- Load Data ---
 df = load_data()
+df.columns = df.columns.str.strip()  # clean spaces just in case
 
+# --- Streamlit Page Setup ---
 st.title("🎯 Objective 1: Understand the Sample Demographics and Baseline Behaviors")
 st.markdown("""
 This section focuses on understanding the demographic characteristics of respondents and their typical sleep schedules.
 """)
 
-# Clean column names (in case there are spaces)
-df.columns = df.columns.str.strip()
-
 # ------------------------------------------------------------
-# 1️⃣ Gender Distribution
+# 1️⃣ Age Distribution of Respondents (Pie Chart)
 # ------------------------------------------------------------
-st.subheader("1️⃣ Gender Distribution of Respondents")
-
-gender_counts = df['What is your gender?'].value_counts().reset_index()
-gender_counts.columns = ['Gender', 'Count']
-
-fig1 = px.pie(gender_counts,
+st.header("1️⃣ 🎂 Age Distribution of Respondents")
+age_counts = df['Your Age'].value_counts().reset_index()
+age_counts.columns = ['Age', 'Count']
+fig1 = px.pie(age_counts,
               values='Count',
-              names='Gender',
-              title='Distribution of Respondent Gender',
-              hole=0.3)
+              names='Age',
+              title='Distribution of Respondent Age',
+              hole=.3)
+fig1.update_traces(textposition='inside', textinfo='percent+label')
 st.plotly_chart(fig1, use_container_width=True)
 
 st.markdown("---")
 
 # ------------------------------------------------------------
-# 2️⃣ Age Distribution
+# 2️⃣ Gender Distribution by Occupation (Grouped Bar Chart)
 # ------------------------------------------------------------
-st.subheader("2️⃣ Age Distribution of Respondents")
-
-age_counts = df['Your Age'].value_counts().reset_index()
-age_counts.columns = ['Age', 'Count']
-
-fig2 = px.bar(age_counts,
-              x='Age',
+st.header("2️⃣ 🧑‍💼 Gender Distribution by Occupation")
+gender_occupation_counts = df.groupby(['What is your occupation?', 'What is your gender?']).size().reset_index(name='Count')
+gender_occupation_counts.columns = ['Occupation', 'Gender', 'Count']
+fig2 = px.bar(gender_occupation_counts,
+              x='Occupation',
               y='Count',
-              color='Age',
-              title='Distribution of Respondent Age')
-fig2.update_layout(xaxis={'categoryorder': 'total descending'})
+              color='Gender',
+              barmode='group',
+              title='Gender Distribution by Occupation',
+              labels={'Occupation': 'Occupation', 'Count': 'Count'},
+              color_discrete_map={'Male': 'blue', 'Female': 'red', 'Other': 'green'})
+fig2.update_layout(xaxis={'categoryorder': 'total descending'}, xaxis_tickangle=-45)
 st.plotly_chart(fig2, use_container_width=True)
 
 st.markdown("---")
 
 # ------------------------------------------------------------
-# 3️⃣ Typical Sleep Schedule
+# 3️⃣ Distribution of Sleep Hours by Gender (Stacked Bar Chart)
 # ------------------------------------------------------------
-st.subheader("3️⃣ Typical Sleep Schedule on Working Days vs Weekends")
-
-sleep_times = df[['What time do you usually go to bed?', 'What time do you usually wake up on working days?',
-                  'What time do you usually go to bed on weekends?', 'What time do you usually wake up on weekends?']]
-
-# For better visualization, we can show average or just count frequency
-bed_counts = df['What time do you usually go to bed?'].value_counts().reset_index()
-bed_counts.columns = ['Bed Time', 'Count']
-
-fig3 = px.bar(bed_counts,
-              x='Bed Time',
+st.header("3️⃣ 🌙 Distribution of Average Sleep Hours by Gender")
+gender_sleep_counts = df.groupby(['What is your gender?', 'How many hours of sleep do you get on average per night?']).size().reset_index(name='Count')
+gender_sleep_counts.columns = ['Gender', 'Sleep Hours', 'Count']
+fig3 = px.bar(gender_sleep_counts,
+              x='Gender',
               y='Count',
-              title='Most Common Bed Times on Working Days')
-fig3.update_layout(xaxis_tickangle=-45)
+              color='Sleep Hours',
+              barmode='stack',
+              title='Distribution of Sleep Hours by Gender',
+              labels={'Sleep Hours': 'Average Sleep Hours'})
+fig3.update_layout(xaxis_tickangle=0)
 st.plotly_chart(fig3, use_container_width=True)
 
-st.markdown("📊 These visualizations provide a clear overview of the respondents’ demographics and general sleep routines.")
+st.markdown("---")
+
+st.success("✅ Objective 1 visualizations loaded successfully!")
