@@ -1,14 +1,18 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
-import numpy as np
+# ... (other imports) ...
 
-# --- CONFIGURATION (First st command) ---
-st.set_page_config(layout="wide", page_title="Sleep Survey Data Analysis")
+# Remove the first st.set_page_config call
+# st.set_page_config(page_title="Scientific Visualization") 
+
+# Keep the comprehensive one
+st.set_page_config(
+    layout="wide", 
+    page_title="Comprehensive Student Survey Analysis" # Only one call allowed, and it MUST be first!
+)
+
 st.header("Scientific Visualization", divider="gray")
-st.title("🎓 Sleep Survey and Performance Analysis")
-st.markdown("---")
+# ... (rest of your code) ...
 
 import plotly.express as px
 import pandas as pd # Import pandas if not already imported
