@@ -105,9 +105,9 @@ st.markdown("---")
 st.header("6. ⏰ Main Reasons for Sleeping Late by Age Group")
 
 # Check if the column exists to avoid errors
-if 'What are the main reasons you sleep late?' in df.columns and 'Your Age' in df.columns:
-    # Split the multi-select column into separate columns
-    reasons_df = df['What are the main reasons you sleep late?'].astype(str).str.get_dummies(sep=';')
+st.write("🧾 Columns in dataset:", list(df.columns))
+if 'What are the main reasons you sleep late ?' in df.columns and 'Your Age' in df.columns:
+    reasons_df = df['What are the main reasons you sleep late ?'].astype(str).str.get_dummies(sep=';')
 
     # Combine with the Age column
     age_reasons_df = pd.concat([df['Your Age'], reasons_df], axis=1)
