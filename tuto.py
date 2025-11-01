@@ -39,7 +39,7 @@ fig1 = px.pie(age_counts,
 fig1.update_traces(textposition='inside', textinfo='percent+label')
 st.plotly_chart(fig1, use_container_width=True)
 
----
+st.markdown("---")
 
 ## 2. Gender Distribution by Occupation (Grouped Bar Chart)
 st.header("2. 🧑‍💼 Gender Distribution by Occupation")
