@@ -28,31 +28,8 @@ st.title("😴 Sleep Data Visualization")
 
 if not df.empty:
     st.markdown("### Preview of the Data")
-    st.dataframe(df.head())
+    st.dataframe(df)
     
     st.markdown("---")
     
-    ## Plotly Visualization
-    st.markdown("### Interactive Scatter Plot (e.g., Sleep Duration vs. Quality)")
 
-    # Identify potential numeric columns for the chart (customize as needed)
-    numeric_cols = df.select_dtypes(include=['number']).columns.tolist()
-
-    if 'sleep duration' in numeric_cols and 'quality of sleep' in numeric_cols:
-        # Create an interactive scatter plot using Plotly Express
-        fig = px.scatter(
-            df, 
-            x='sleep duration', 
-            y='quality of sleep',
-            title='Sleep Duration vs. Quality of Sleep',
-            hover_data=['person id', 'age'], # Include other columns in the hover tooltip
-            color='gender' # Use a categorical column to differentiate points by color
-        )
-        
-        # Display the Plotly figure in Streamlit
-        st.plotly_chart(fig, use_container_width=True)
-    else:
-        st.warning("Required numeric columns ('sleep duration' and 'quality of sleep') not found for the default plot.")
-        
-else:
-    st.error("The DataFrame is empty. Please check the URL and CSV file.")
