@@ -4,6 +4,8 @@ import plotly.express as px
 
 # Load dataset
 df = pd.read_csv("cleaned_sleep_data_3.csv")
+st.write("🧾 Columns in dataset:", df.columns.tolist())
+
 
 # --- PAGE TITLE ---
 st.title("🎯 Objective 1: Understand the Sample Demographics and Baseline Behaviors")
@@ -13,7 +15,7 @@ This section focuses on understanding the **demographic characteristics** of res
 
 # --- Visualization 1: Gender Distribution ---
 st.subheader("1️⃣ Gender Distribution")
-gender_counts = df['Gender'].value_counts().reset_index()
+gender_counts = df['Your Gender'].value_counts().reset_index()
 gender_counts.columns = ['Gender', 'Count']
 fig1 = px.pie(gender_counts, names='Gender', values='Count', title='Gender Distribution')
 st.plotly_chart(fig1, use_container_width=True)
