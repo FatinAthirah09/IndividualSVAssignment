@@ -1,20 +1,34 @@
 import streamlit as st
-from app_helpers import load_data
+import pandas as pd
 import plotly.express as px
 
-st.set_page_config(layout="wide")
-st.title("📊 Sleep Data Exploration")
+# Load dataset
+df = pd.read_csv("cleaned_sleep_data_3.csv")
 
-# --- Load data ---
-df = load_data()
+# --- PAGE TITLE ---
+st.title("🎯 Objective 1: Understand the Sample Demographics and Baseline Behaviors")
+st.markdown("""
+This section focuses on understanding the **demographic characteristics** of respondents and their **typical sleep schedules**.
+""")
 
-st.write("### Preview of Data")
-st.dataframe(df.head())
+# --- Visualization 1: Gender Distribution ---
+st.subheader("1️⃣ Gender Distribution")
+gender_counts = df['Gender'].value_counts().reset_index()
+gender_counts.columns = ['Gender', 'Count']
+fig1 = px.pie(gender_counts, names='Gender', values='Count', title='Gender Distribution')
+st.plotly_chart(fig1, use_container_width=True)
 
-st.markdown("---")
+# --- Visualization 2: Age Group Distribution ---
+st.subheader("2️⃣ Age Group Distribution")
+fig2 = px.histogram(df, x='Your Age', title='Age Group Distribution', color='Your Age')
+st.plotly_chart(fig2, use_container_width=True)
 
-st.header("🎂 Age Distribution of Respondents")
-age_counts = df['Your Age'].value_counts().reset_index()
-age_counts.columns = ['Age', 'Count']
-fig = px.pie(age_counts, values='Count', names='Age', hole=.3)
-st.plotly_chart(fig, use_container_width=True)
+# --- Visualization 3: Typical Bedtime ---
+st.subheader("3️⃣ Typical Bedtime by Age Group")
+if 'What time do you usually go to bed?' in df.columns:
+    fig3 = px.box(df, x='Your Age', y='What time do you usually go to bed?',
+                  title='Bedtime Patterns by Age Group',
+                  color='Your Age')
+    st.plotly_chart(fig3, use_container_width=True)
+else:
+    st.warning("⚠️ Column 'What time do you usually go to bed?' not found in dataset.")
