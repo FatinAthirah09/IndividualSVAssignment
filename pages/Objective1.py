@@ -6,6 +6,15 @@ import plotly.express as px
 df = pd.read_csv("cleaned_sleep_data_3.csv")
 st.write("🧾 Columns in dataset:", df.columns.tolist())
 
+df.rename(columns={
+    'What is your gender?': 'Gender',
+    'Your Age': 'Age',
+    'What is your occupation?': 'Occupation',
+    'How many hours of sleep do you get on average per night?': 'Sleep Hours',
+    'How would you rate the comfort of your sleeping environment': 'Comfort',
+}, inplace=True)
+
+
 
 # --- PAGE TITLE ---
 st.title("🎯 Objective 1: Understand the Sample Demographics and Baseline Behaviors")
