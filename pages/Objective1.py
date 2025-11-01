@@ -15,7 +15,7 @@ This section focuses on understanding the **demographic characteristics** of res
 
 # --- Visualization 1: Gender Distribution ---
 st.subheader("1️⃣ Gender Distribution")
-gender_counts = df['Your Gender'].value_counts().reset_index()
+gender_counts = df['What is your Gender'].value_counts().reset_index()
 gender_counts.columns = ['Gender', 'Count']
 fig1 = px.pie(gender_counts, names='Gender', values='Count', title='Gender Distribution')
 st.plotly_chart(fig1, use_container_width=True)
