@@ -56,7 +56,7 @@ fig2 = px.bar(gender_occupation_counts,
 fig2.update_layout(xaxis={'categoryorder':'total descending'}, xaxis_tickangle=-45)
 st.plotly_chart(fig2, use_container_width=True)
 
----
+st.markdown("---")
 
 ## 3. Distribution of Sleep Hours by Gender (Stacked Bar Chart)
 st.header("3. 🌙 Distribution of Average Sleep Hours by Gender")
@@ -72,7 +72,7 @@ fig3 = px.bar(gender_sleep_counts,
 fig3.update_layout(xaxis_tickangle=0)
 st.plotly_chart(fig3, use_container_width=True)
 
----
+st.markdown("---")
 
 ## 4. Difficulty Falling Asleep by Gender (Grouped Bar Chart)
 st.header("4. 💤 Difficulty Falling Asleep by Gender")
@@ -88,7 +88,7 @@ fig4 = px.bar(sleep_difficulty_gender_counts,
 fig4.update_layout(xaxis_tickangle=-45)
 st.plotly_chart(fig4, use_container_width=True)
 
----
+st.markdown("---")
 
 ## 5. Relationship between Concentration Difficulty and Falling Asleep (Heatmap)
 st.header("5. 🤔 Concentration vs. Falling Asleep Difficulty")
@@ -105,7 +105,7 @@ fig5.update_layout(
 )
 st.plotly_chart(fig5, use_container_width=True)
 
----
+st.markdown("---")
 
 ## 6. Main Reasons for Sleeping Late by Age Group (Stacked Bar Chart)
 st.header("6. ⏰ Main Reasons for Sleeping Late by Age Group")
@@ -127,7 +127,7 @@ fig6 = px.bar(age_reasons_long,
 fig6.update_layout(xaxis_tickangle=-45)
 st.plotly_chart(fig6, use_container_width=True)
 
----
+st.markdown("---")
 
 ## 7. Comfort of Sleeping Environment Ratings by Average Hours of Sleep (Line/Dot Plot)
 st.header("7. 🛌 Comfort Ratings vs. Average Sleep Hours")
@@ -159,7 +159,7 @@ fig7.update_layout(
 )
 st.plotly_chart(fig7, use_container_width=True)
 
----
+st.markdown("---")
 
 ## 8. Average Sleep Hours vs. Side Effects from Late Sleeping (Heatmap)
 st.header("8. 🤕 Average Sleep Hours vs. Late Sleeping Side Effects")
@@ -180,7 +180,7 @@ fig8.update_layout(
 )
 st.plotly_chart(fig8, use_container_width=True)
 
----
+st.markdown("---")
 
 ## 9. Difficulty Concentrating by Sleep Environment Comfort (Bar Subplots)
 st.header("9. 🤯 Difficulty Concentrating by Sleep Environment Comfort")
