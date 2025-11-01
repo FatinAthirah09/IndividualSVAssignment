@@ -104,32 +104,44 @@ st.markdown("---")
 ## 6. Main Reasons for Sleeping Late by Age Group (Stacked Bar Chart)
 st.header("6. ⏰ Main Reasons for Sleeping Late by Age Group")
 
-# Check if the column exists to avoid errors
-st.write("🧾 Columns in dataset:", list(df.columns))
-if 'What are the main reasons you sleep late ?' in df.columns and 'Your Age' in df.columns:
-    reasons_df = df['What are the main reasons you sleep late ?'].astype(str).str.get_dummies(sep=';')
+# --- Detect column name automatically ---
+# We'll find the closest column name that contains the keyword "reasons" and "sleep late"
+target_col = None
+for col in df.columns:
+    if "reason" in col.lower() and "sleep" in col.lower():
+        target_col = col
+        break
 
-    # Combine with the Age column
+st.write("🧾 Detected column for reasons:", target_col)
+
+# --- Proceed if the column was found ---
+if target_col is not None and 'Your Age' in df.columns:
+    reasons_df = df[target_col].astype(str).str.get_dummies(sep=';')
+
+    # Combine with Age
     age_reasons_df = pd.concat([df['Your Age'], reasons_df], axis=1)
 
-    # Group by age and sum up the counts
+    # Group and sum
     age_reasons_counts = age_reasons_df.groupby('Your Age').sum().reset_index()
 
-    # Convert wide format to long format for plotting
-    age_reasons_long = age_reasons_counts.melt(id_vars='Your Age', var_name='Reason', value_name='Count')
+    # Melt for plotly
+    age_reasons_long = age_reasons_counts.melt(id_vars='Your Age', 
+                                               var_name='Reason', 
+                                               value_name='Count')
 
-    # Plot the bar chart
-    fig6 = px.bar(age_reasons_long,
-                  x='Your Age',
-                  y='Count',
-                  color='Reason',
-                  title='Main Reasons for Sleeping Late by Age Group',
-                  labels={'Your Age': 'Age Group', 'Count': 'Count of Reasons'},
-                  orientation='v')
+    # Plot using Plotly
+    fig6 = px.bar(
+        age_reasons_long,
+        x='Your Age',
+        y='Count',
+        color='Reason',
+        title='Main Reasons for Sleeping Late by Age Group',
+        labels={'Your Age': 'Age Group', 'Count': 'Count of Reasons'}
+    )
     fig6.update_layout(xaxis_tickangle=-45)
     st.plotly_chart(fig6, use_container_width=True)
 else:
-    st.warning("⚠️ Column 'What are the main reasons you sleep late?' not found in dataset.")
+    st.warning("⚠️ Could not find the column for sleeping late reasons or 'Your Age'. Check your dataset.")
 
 
 st.markdown("---")
