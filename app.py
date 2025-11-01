@@ -1,15 +1,9 @@
 import streamlit as st
-import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+from app_helpers import load_data, split_multi_select
 
 # --- Data Loading ---
-@st.cache_data
-def load_data():
-    """Loads and returns the cleaned sleep data."""
-    url = 'https://raw.githubusercontent.com/FatinAthirah09/IndividualSVAssignment/refs/heads/main/cleaned_sleep_data%20(3).csv'
-    df = pd.read_csv(url)
-    return df
 
 df = load_data()
 
