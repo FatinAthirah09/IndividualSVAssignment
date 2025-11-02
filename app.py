@@ -101,7 +101,7 @@ st.divider()
 st.markdown("""
 ---
 👩‍💻 **Developed by:** Fatin Nur Athirah bt Abdul Azim  
-📚 **Course:** Data Visualization Assignment  
+📚 **Course:** Scientific Visualization Assignment  
 🏫 **Institution:** Universiti Malaysia Kelantan  
 🗓️ **Year:** 2025  
 
