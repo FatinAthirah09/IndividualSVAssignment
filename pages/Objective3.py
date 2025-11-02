@@ -24,7 +24,17 @@ st.divider()
 
 # --- Summary Box ---
 # Key stats
-avg_sleep_hours = df['How many hours of sleep do you get on average per night?'].mean().round(1)
+# Convert sleep hours to numeric, coerce errors to NaN
+df['How many hours of sleep do you get on average per night?'] = pd.to_numeric(
+    df['How many hours of sleep do you get on average per night?'], errors='coerce'
+)
+
+# Drop rows where sleep hours could not be converted
+df_sleep_clean = df.dropna(subset=['How many hours of sleep do you get on average per night?'])
+
+# Now calculate average sleep hours safely
+avg_sleep_hours = df_sleep_clean['How many hours of sleep do you get on average per night?'].mean().round(1)
+].mean().round(1)
 most_common_comfort = df['How would you rate the comfort of your sleeping environment'].mode()[0]
 
 # Side effects
@@ -70,7 +80,7 @@ st.divider()
 
 # --- Visualization 8: Average Sleep Hours vs Side Effects ---
 with st.expander("🤕 Average Sleep Hours vs Side Effects from Late Sleeping", expanded=True):
-    sleep_side_effects_df = pd.concat([df['How many hours of sleep do you get on average per night?'], side_effects_df], axis=1)
+    sleep_side_effects_df = pd.concat([df_sleep_cleaned['How many hours of sleep do you get on average per night?'], side_effects_df], axis=1)
     sleep_side_effects_counts = sleep_side_effects_df.groupby('How many hours of sleep do you get on average per night?').sum()
     fig8 = px.imshow(
         sleep_side_effects_counts,
