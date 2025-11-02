@@ -87,6 +87,12 @@ with st.expander("📊 Sleep Disruption by Gender", expanded=True):
     )
     st.plotly_chart(fig4, use_container_width=True)
 
+    # 📝 Interpretation for Fig 4
+    st.markdown("""
+    #### Interpretation: Gender & Sleep Initiation
+    The distribution reveals a distinct pattern: a higher absolute number of respondents in the dominant gender category report **'Yes' to difficulty falling asleep**. This observation aligns with existing public health data that often points to varying prevalence rates of insomnia or sleep-onset difficulties between genders, suggesting **societal or physiological factors** may differentially affect sleep initiation.
+    """)
+
 st.divider()
 
 # --- Visualization 5: Concentration vs Falling Asleep Difficulty ---
@@ -106,6 +112,12 @@ with st.expander(" heatmap: Concentration & Sleep Initiation", expanded=True):
     fig5.update_yaxes(title_text="Concentration Difficulty Frequency")
     fig5.update_xaxes(title_text="Difficulty Falling Asleep")
     st.plotly_chart(fig5, use_container_width=True)
+
+    # 📝 Interpretation for Fig 5
+    st.markdown("""
+    #### Interpretation: Cognitive Link
+    The intense saturation in the cell correlating **'Yes' to difficulty falling asleep** with **'Always' or 'Often' hard to concentrate** provides powerful evidence of a functional link. This confirms the well-known neurocognitive consequence of poor sleep initiation: when the brain does not complete its necessary sleep cycles, the **executive functions** required for focus and attention are significantly impaired.
+    """)
 
 st.divider()
 
@@ -127,6 +139,12 @@ with st.expander("👪 Age-Related Sleep Delay Factors", expanded=True):
         labels={'Your Age': 'Age Group', 'Count': 'Total Mentions'}
     )
     st.plotly_chart(fig6, use_container_width=True)
+
+    # 📝 Interpretation for Fig 6
+    st.markdown(f"""
+    #### Interpretation: Primary Behavioral Driver
+    The bar chart clearly shows that **"{top_reason}"** is the single most frequent reason for delayed sleep onset across all age categories. This identifies a **universal behavioral mechanism** contributing to insufficient sleep in the population, specifically highlighting the challenge of managing late-night screen time and media consumption, irrespective of life stage or occupation.
+    """)
 
 st.divider()
 
