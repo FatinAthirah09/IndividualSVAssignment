@@ -83,6 +83,12 @@ with st.expander("🎂 Age Distribution of Respondents (Pie Chart)", expanded=Tr
                   title='Distribution of Respondent Age Groups', hole=.3)
     fig1.update_traces(textposition='inside', textinfo='percent+label')
     st.plotly_chart(fig1, use_container_width=True)
+    
+    # 📝 Interpretation for Fig 1
+    st.markdown("""
+    #### Interpretation: Sample Focus
+    The dominant presence of respondents from specific age groups (e.g., 18-25 years) indicates that the subsequent findings regarding sleep habits and issues will be **most representative of the behavior and challenges faced by young adults/students**. This demographic focus should be acknowledged when generalizing results.
+    """)
 
 st.divider()
 
@@ -101,6 +107,12 @@ with st.expander("🧑‍💼 Gender Distribution across Occupations", expanded=
                   labels={'What is your occupation?': 'Occupation', 'Count': 'Count'})
     fig2.update_layout(xaxis_tickangle=-45)
     st.plotly_chart(fig2, use_container_width=True)
+    
+    # 📝 Interpretation for Fig 2
+    st.markdown("""
+    #### Interpretation: Potential Bias
+    The clear imbalance in representation across occupation and gender categories (e.g., higher participation from one gender within the 'Student' category) suggests a **sampling bias**. This implies that differences observed in sleep patterns might be attributable to lifestyle factors inherent to the over-represented groups rather than just biological gender or occupational stress.
+    """)
 
 st.divider()
 
@@ -127,6 +139,12 @@ with st.expander("🌙 Sleep Duration Patterns by Gender", expanded=True):
                   title='Distribution of Sleep Hours by Gender',
                   labels={'How many hours of sleep do you get on average per night?': 'Sleep Hours'})
     st.plotly_chart(fig3, use_container_width=True)
+    
+    # 📝 Interpretation for Fig 3
+    st.markdown("""
+    #### Interpretation: Baseline Risk
+    While **{avg_sleep} hours** is the most common duration (suggesting a majority meet the minimum recommended sleep), the visual presence of many respondents in the **5 hours or less** categories across all genders highlights a significant minority already engaging in chronic sleep deprivation. This establishes a high-risk baseline that needs further investigation in Objectives 2 and 3.
+    """.format(avg_sleep=avg_sleep))
 
 st.divider()
 
