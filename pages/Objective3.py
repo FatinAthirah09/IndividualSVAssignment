@@ -10,19 +10,60 @@ df = load_data()
 # --- Page Config ---
 st.title("📉 Objective 3: Analyze the Relationship Between Sleep Duration, Discomfort, and Negative Outcomes")
 st.markdown("""
-This objective investigates **how sleep duration** and **sleep environment comfort** affect concentration, side effects, and overall well-being.  
+This objective investigates **how sleep duration** and **sleep environment comfort** affect concentration, side effects, and overall well-being.
 The visualizations focus on **patterns of discomfort and negative outcomes** among different sleep groups.
 """)
 
-# --- Summary Box: Key Findings ---
+# --- Summary Box: Key Findings (Replaced with HTML Cards) ---
 st.header("💡 Key Findings Summary")
-st.info("""
-Based on the analysis of sleep duration, environment comfort, and negative outcomes, here are the core insights:
 
-* **Comfort & Sleep Duration:** There appears to be a strong positive correlation between higher **comfort ratings** and respondents reporting **longer average sleep durations** (e.g., 7-8 hours).
-* **Sleep Duration & Side Effects:** Respondents with **shorter sleep durations** (e.g., 4-5 hours) report a significantly **higher incidence** of various negative side effects like headaches, fatigue, and irritability from late sleeping.
-* **Comfort & Concentration:** Individuals who rate their sleeping environment as **highly comfortable** (e.g., 'Very Comfortable') tend to report **less frequent difficulty concentrating** due to lack of sleep compared to those who rate their environment as less comfortable.
-""")
+col1, col2, col3 = st.columns(3)
+
+# Card 1: Comfort & Sleep Duration
+with col1:
+    st.markdown(
+        f"""
+        <div style="background-color:#E3F2FD;padding:15px;border-radius:15px;text-align:center;height:100%;
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.1); border-top: 5px solid #1976D2;">
+            <h4 style="color:#1565C0; margin-top:0;">🛌 Comfort & Long Sleep</h4>
+            <p style="color:#0D47A1; margin-bottom:0; font-size:14px;">
+                Higher **Comfort Ratings** strongly correlate with **Longer Sleep Durations** (7-8 hours).
+            </p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+# Card 2: Sleep Duration & Side Effects
+with col2:
+    st.markdown(
+        f"""
+        <div style="background-color:#FCE4EC;padding:15px;border-radius:15px;text-align:center;height:100%;
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.1); border-top: 5px solid #C2185B;">
+            <h4 style="color:#AD1457; margin-top:0;">🤕 Short Sleep & Side Effects</h4>
+            <p style="color:#880E4F; margin-bottom:0; font-size:14px;">
+                **Shorter Sleep** (4-5 hours) leads to a **Significantly Higher Incidence** of side effects (fatigue, headaches).
+            </p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+# Card 3: Comfort & Concentration
+with col3:
+    st.markdown(
+        f"""
+        <div style="background-color:#FFF3E0;padding:15px;border-radius:15px;text-align:center;height:100%;
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.1); border-top: 5px solid #F57C00;">
+            <h4 style="color:#EF6C00; margin-top:0;">🧠 Comfort & Focus</h4>
+            <p style="color:#E65100; margin-bottom:0; font-size:14px;">
+                **Highly Comfortable** environments link to **Less Frequent Difficulty** with concentration.
+            </p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
 # --- End Summary Box ---
 
 st.divider()
