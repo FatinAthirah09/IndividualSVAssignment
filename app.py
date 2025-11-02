@@ -69,7 +69,7 @@ st.header("📊 Dataset Overview")
 
 with st.expander("Click to view dataset preview and summary", expanded=False):
     st.write("Here’s a glimpse of the dataset used for analysis:")
-    st.dataframe(df.head())
+    st.dataframe(df)
 
     st.markdown("### 🧾 Columns in the Dataset")
     st.write(list(df.columns))
