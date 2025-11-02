@@ -55,7 +55,7 @@ with col3:
         f"""
         <div style="background-color:#FFF3E0;padding:15px;border-radius:15px;text-align:center;height:100%;
                     box-shadow: 0 2px 6px rgba(0,0,0,0.1); border-top: 5px solid #F57C00;">
-            <h4 style="color:#EF6C00; margin-top:0;">🧠 Comfort & Focus</h4>
+            <h4 style="color:#EF6C00; margin-top:0;'>🧠 Comfort & Focus</h4>
             <p style="color:#E65100; margin-bottom:0; font-size:14px;">
                 **Highly Comfortable** environments link to **Less Frequent Difficulty** with concentration.
             </p>
@@ -86,6 +86,12 @@ with st.expander("🛌 Comfort Ratings vs Average Sleep Hours", expanded=True):
                         legend_title='Sleep Hours')
     st.plotly_chart(fig7, use_container_width=True)
 
+    # 📝 Interpretation for Fig 7
+    st.markdown("""
+    #### Interpretation: Environmental Impact on Duration
+    The visualization demonstrates a positive correlation where groups reporting **longer sleep durations (7-8 hours)** exhibit a stronger preference for and higher count within the **'Very Comfortable'** rating category. This supports the hypothesis that a quality sleep environment, a modifiable factor, is a significant determinant in achieving medically recommended sleep length.
+    """)
+
 st.divider()
 
 # --- Visualization 8: Average Sleep Hours vs Side Effects ---
@@ -99,6 +105,12 @@ with st.expander("🤕 Average Sleep Hours vs Side Effects from Late Sleeping", 
                       color_continuous_scale='Blues',
                       title='Average Sleep Hours vs Side Effects')
     st.plotly_chart(fig8, use_container_width=True)
+
+    # 📝 Interpretation for Fig 8
+    st.markdown("""
+    #### Interpretation: Dose-Response Relationship
+    The heatmap clearly illustrates a **dose-response relationship** between sleep deprivation and negative health outcomes. The highest incidence counts for side effects like **Fatigue, Irritability, and Headaches** are concentrated in the **4-5 hour sleep duration bracket**. This underscores the severe, immediate impact of chronic short sleep on physical and emotional well-being.
+    """)
 
 st.divider()
 
@@ -114,6 +126,12 @@ with st.expander("🤯 Difficulty Concentrating by Sleep Environment Comfort", e
     fig9.update_yaxes(title_text="Count")
     fig9.update_layout(showlegend=False)
     st.plotly_chart(fig9, use_container_width=True)
+
+    # 📝 Interpretation for Fig 9
+    st.markdown("""
+    #### Interpretation: Environmental Moderation of Cognitive Function
+    By comparing the distributions across the comfort facets, it is evident that individuals with **'Very Comfortable'** environments report the lowest frequency of severe concentration difficulty ('Always'). This implies that **improving the sleep environment acts as a moderating factor**, potentially leading to deeper, higher-quality sleep that better preserves cognitive functions necessary for focus and sustained attention.
+    """)
 
 st.divider()
 
