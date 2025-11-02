@@ -100,9 +100,9 @@ st.divider()
 # ------------------------------
 st.markdown("""
 ---
-👩‍💻 **Developed by:** [Your Name Here]  
+👩‍💻 **Developed by:** [FATIN NUR ATHIRAH BT ABDUL AZIM]  
 📚 **Course:** Data Visualization Assignment  
-🏫 **Institution:** [Your University Name]  
+🏫 **Institution:** [Universiti Malaysia Kelantan]  
 🗓️ **Year:** 2025  
 
 > *This Streamlit dashboard was created as part of an academic project to analyze sleep behavior and its effects on wellbeing.*
