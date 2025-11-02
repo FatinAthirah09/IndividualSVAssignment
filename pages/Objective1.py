@@ -9,20 +9,23 @@ df = load_data()
 # --- Page Config ---
 st.title("🎯 Objective 1: Understand the Sample Demographics and Baseline Behaviors")
 st.markdown("""
-This objective focuses on identifying **demographic characteristics** and **baseline sleep patterns** among respondents.  
+This objective focuses on identifying **demographic characteristics** and **baseline sleep patterns** among respondents.
 The visualizations below explore participants’ **age, gender, and sleep duration** patterns.
 """)
 
 st.divider()
 
-# --- 📊 Summary Metrics Section ---
-st.subheader("📈 Summary Overview")
+# --- 📊 Key Demographic Metrics Section (Original Stylish HTML Cards Restored) ---
+st.header("📈 Key Demographic Metrics")
 
 # Basic calculations
 total_respondents = len(df)
 age_groups = df['Your Age'].nunique()
+# Calculate the mode of sleep hours
 avg_sleep = df['How many hours of sleep do you get on average per night?'].mode()[0]
 gender_counts = df['What is your gender?'].value_counts()
+main_gender = gender_counts.index[0] # Get the most frequent gender
+main_gender_count = gender_counts.values[0]
 
 # --- Stylish Metric Cards ---
 col1, col2, col3 = st.columns(3)
@@ -44,7 +47,7 @@ with col2:
         f"""
         <div style="background-color:#FFF3E0;padding:20px;border-radius:15px;text-align:center;
                     box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-            <h4 style="color:#E65100;">🎂 Age Groups</h4>
+            <h4 style="color:#E65100;">🎂 Distinct Age Groups</h4>
             <h2 style="color:#BF360C;">{age_groups}</h2>
         </div>
         """,
@@ -63,7 +66,7 @@ with col3:
         unsafe_allow_html=True
     )
 
-st.markdown("### 👩‍🦰 Gender Breakdown")
+st.markdown("### 👩‍🦰 Gender Breakdown Table")
 gender_breakdown = pd.DataFrame({
     'Gender': gender_counts.index,
     'Count': gender_counts.values
@@ -73,22 +76,22 @@ st.dataframe(gender_breakdown, use_container_width=True, hide_index=True)
 st.divider()
 
 # --- Visualization 1: Age Distribution ---
-with st.expander("🎂 Age Distribution of Respondents", expanded=True):
+with st.expander("🎂 Age Distribution of Respondents (Pie Chart)", expanded=True):
     age_counts = df['Your Age'].value_counts().reset_index()
     age_counts.columns = ['Age', 'Count']
     fig1 = px.pie(age_counts, values='Count', names='Age',
-                  title='Distribution of Respondent Age', hole=.3)
+                  title='Distribution of Respondent Age Groups', hole=.3)
     fig1.update_traces(textposition='inside', textinfo='percent+label')
     st.plotly_chart(fig1, use_container_width=True)
 
 st.divider()
 
 # --- Visualization 2: Gender Distribution by Occupation ---
-with st.expander("🧑‍💼 Gender Distribution by Occupation", expanded=True):
+with st.expander("🧑‍💼 Gender Distribution across Occupations", expanded=True):
     gender_occupation_counts = df.groupby(
         ['What is your occupation?', 'What is your gender?']
     ).size().reset_index(name='Count')
-    
+
     fig2 = px.bar(gender_occupation_counts,
                   x='What is your occupation?',
                   y='Count',
@@ -102,15 +105,36 @@ with st.expander("🧑‍💼 Gender Distribution by Occupation", expanded=True)
 st.divider()
 
 # --- Visualization 3: Sleep Hours by Gender ---
-with st.expander("🌙 Average Sleep Hours by Gender", expanded=True):
+with st.expander("🌙 Sleep Duration Patterns by Gender", expanded=True):
     gender_sleep_counts = df.groupby(
         ['What is your gender?', 'How many hours of sleep do you get on average per night?']
     ).size().reset_index(name='Count')
-    
+
+    # Ensure sleep hours are ordered correctly for better visual presentation
+    sleep_order = sorted(gender_sleep_counts['How many hours of sleep do you get on average per night?'].unique())
+    gender_sleep_counts['How many hours of sleep do you get on average per night?'] = pd.Categorical(
+        gender_sleep_counts['How many hours of sleep do you get on average per night?'],
+        categories=sleep_order,
+        ordered=True
+    )
+    gender_sleep_counts = gender_sleep_counts.sort_values('How many hours of sleep do you get on average per night?')
+
     fig3 = px.bar(gender_sleep_counts,
                   x='What is your gender?',
                   y='Count',
                   color='How many hours of sleep do you get on average per night?',
                   barmode='stack',
-                  title='Distribution of Sleep Hours by Gender')
+                  title='Distribution of Sleep Hours by Gender',
+                  labels={'How many hours of sleep do you get on average per night?': 'Sleep Hours'})
     st.plotly_chart(fig3, use_container_width=True)
+
+st.divider()
+
+## 🌟 Conclusion for Objective 1: Sample Demographics and Baseline Behaviors
+st.success(f"""
+The analysis for Objective 1 provides a clear profile of the survey participants and their **baseline sleep habits**:
+
+* **Sample Characteristics:** The survey successfully captured data across **{age_groups} distinct age groups**. The sample is dominated by **{main_gender}** respondents, who account for the largest share of the dataset ({main_gender_count} respondents).
+* **Occupational Distribution:** The gender breakdown varies significantly across occupations, which may introduce biases that need to be considered in later, deeper analysis.
+* **Baseline Sleep:** The **modal (most common) average sleep duration** among all respondents is **{avg_sleep} hours**. While this suggests a central tendency around the recommended sleep range, the full distribution of the stacked bar chart shows significant portions of the sample are falling both below and above this mode.
+""")
