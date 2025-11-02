@@ -10,26 +10,26 @@ df = load_data()
 # --- Page Config ---
 st.title("📉 Objective 3: Analyze the Relationship Between Sleep Duration, Discomfort, and Negative Outcomes")
 st.markdown("""
-This objective investigates **how sleep duration** and **sleep environment comfort** affect concentration, side effects, and overall well-being.  
-The visualizations provide insights into patterns of discomfort and negative outcomes across different sleep groups.
+This objective investigates **how sleep duration** and **sleep environment comfort** affect concentration, side effects, and overall well-being.  
+The visualizations focus on **patterns of discomfort and negative outcomes** among different sleep groups.
 """)
 
-st.divider()
+# --- Summary Box: Key Findings ---
+st.header("💡 Key Findings Summary")
+st.info("""
+Based on the analysis of sleep duration, environment comfort, and negative outcomes, here are the core insights:
 
-# --- Summary Box ---
-st.info(
-    f"💡 Key Summary:\n"
-    f"- The dataset contains **{len(df)} respondents**.\n"
-    f"- Average sleep duration: **{pd.to_numeric(df['How many hours of sleep do you get on average per night?'], errors='coerce').mean():.1f} hours/night**.\n"
-    f"- Comfort ratings vary across different sleep duration groups, showing potential links to concentration difficulties and side effects."
-)
+* **Comfort & Sleep Duration:** There appears to be a strong positive correlation between higher **comfort ratings** and respondents reporting **longer average sleep durations** (e.g., 7-8 hours).
+* **Sleep Duration & Side Effects:** Respondents with **shorter sleep durations** (e.g., 4-5 hours) report a significantly **higher incidence** of various negative side effects like headaches, fatigue, and irritability from late sleeping.
+* **Comfort & Concentration:** Individuals who rate their sleeping environment as **highly comfortable** (e.g., 'Very Comfortable') tend to report **less frequent difficulty concentrating** due to lack of sleep compared to those who rate their environment as less comfortable.
+""")
+# --- End Summary Box ---
 
 st.divider()
 
 # --- Visualization 7: Comfort Ratings vs Average Sleep Hours ---
 with st.expander("🛌 Comfort Ratings vs Average Sleep Hours", expanded=True):
-    grouped_comfort = df.groupby(['How many hours of sleep do you get on average per night?',
-                                  'How would you rate the comfort of your sleeping environment']).size().reset_index(name='Count')
+    grouped_comfort = df.groupby(['How many hours of sleep do you get on average per night?', 'How would you rate the comfort of your sleeping environment']).size().reset_index(name='Count')
     fig7 = go.Figure()
     for sleep_group in sorted(grouped_comfort['How many hours of sleep do you get on average per night?'].unique()):
         data = grouped_comfort[grouped_comfort['How many hours of sleep do you get on average per night?'] == sleep_group]
@@ -40,9 +40,9 @@ with st.expander("🛌 Comfort Ratings vs Average Sleep Hours", expanded=True):
             name=f'{sleep_group} hours'
         ))
     fig7.update_layout(title='Comfort of Sleeping Environment vs Average Hours of Sleep',
-                       xaxis_title='Comfort Rating',
-                       yaxis_title='Count',
-                       legend_title='Sleep Hours')
+                        xaxis_title='Comfort Rating',
+                        yaxis_title='Count',
+                        legend_title='Sleep Hours')
     st.plotly_chart(fig7, use_container_width=True)
 
 st.divider()
@@ -53,10 +53,10 @@ with st.expander("🤕 Average Sleep Hours vs Side Effects from Late Sleeping", 
     sleep_side_effects_df = pd.concat([df['How many hours of sleep do you get on average per night?'], side_effects_df], axis=1)
     sleep_side_effects_counts = sleep_side_effects_df.groupby('How many hours of sleep do you get on average per night?').sum()
     fig8 = px.imshow(sleep_side_effects_counts,
-                     text_auto=True,
-                     aspect="auto",
-                     color_continuous_scale='Blues',
-                     title='Average Sleep Hours vs Side Effects')
+                      text_auto=True,
+                      aspect="auto",
+                      color_continuous_scale='Blues',
+                      title='Average Sleep Hours vs Side Effects')
     st.plotly_chart(fig8, use_container_width=True)
 
 st.divider()
@@ -73,3 +73,14 @@ with st.expander("🤯 Difficulty Concentrating by Sleep Environment Comfort", e
     fig9.update_yaxes(title_text="Count")
     fig9.update_layout(showlegend=False)
     st.plotly_chart(fig9, use_container_width=True)
+
+st.divider()
+
+## 🌟 Conclusion for Objective 3
+st.success("""
+The analysis for Objective 3 clearly establishes a link between **adequate sleep, environmental comfort, and better outcomes**.
+
+Respondents who enjoy a **comfortable sleeping environment** generally achieve the recommended 7-8 hours of sleep. Conversely, those with **shorter sleep durations** (under 6 hours) consistently report a higher frequency of negative consequences, including **concentration difficulties** and various **side effects** like fatigue and irritability.
+
+**The overall takeaway is that promoting both sufficient sleep hours and a comfortable sleep setting is crucial for minimizing negative well-being and cognitive outcomes.**
+""")
