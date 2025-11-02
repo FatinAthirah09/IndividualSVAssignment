@@ -10,8 +10,8 @@ df = load_data()
 # --- Page Config ---
 st.title("📉 Objective 3: Analyze the Relationship Between Sleep Duration, Discomfort, and Negative Outcomes")
 st.markdown("""
-This objective investigates **how sleep duration** and **sleep environment comfort** affect concentration, side effects, and overall well-being.  
-The visualizations provide insights into patterns of discomfort and negative outcomes across different sleep groups.
+This objective focuses on understanding **how sleep duration** and **sleep environment comfort** impact respondents’ **concentration, side effects, and overall well-being**.  
+The visualizations below explore patterns of **discomfort and negative outcomes** across different sleep groups.
 """)
 
 st.divider()
@@ -19,9 +19,9 @@ st.divider()
 # --- Summary Box ---
 st.info(
     f"💡 Key Summary:\n"
-    f"- The dataset contains **{len(df)} respondents**.\n"
-    f"- Average sleep duration: **{pd.to_numeric(df['How many hours of sleep do you get on average per night?'], errors='coerce').mean():.1f} hours/night**.\n"
-    f"- Comfort ratings vary across different sleep duration groups, showing potential links to concentration difficulties and side effects."
+    f"- Total respondents: **{len(df)}**\n"
+    f"- Average sleep duration: **{pd.to_numeric(df['How many hours of sleep do you get on average per night?'], errors='coerce').mean():.1f} hours/night**\n"
+    f"- Comfort ratings vary across sleep duration groups, which may influence concentration difficulties and side effects."
 )
 
 st.divider()
