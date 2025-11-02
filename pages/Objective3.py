@@ -11,11 +11,15 @@ df = load_data()
 st.title("📉 Objective 3: Analyze the Relationship Between Sleep Duration, Discomfort, and Negative Outcomes")
 st.markdown("""
 This objective investigates **how sleep duration** and **sleep environment comfort** affect concentration, side effects, and overall well-being.  
-The visualizations focus on **patterns of discomfort and negative outcomes** among different sleep groups.
+The visualizations highlight patterns of **discomfort and negative outcomes** among different sleep groups.
 """)
 
-# --- Summary Box (replace old one) ---
-avg_sleep_hours = pd.to_numeric(df['How many hours of sleep do you get on average per night?'], errors='coerce').mean()
+# --- Summary Box ---
+# Safely convert sleep hours to numeric
+df['How many hours of sleep do you get on average per night?'] = pd.to_numeric(
+    df['How many hours of sleep do you get on average per night?'], errors='coerce'
+)
+avg_sleep_hours = df['How many hours of sleep do you get on average per night?'].mean()
 total_respondents = len(df)
 
 st.markdown(
@@ -25,7 +29,7 @@ st.markdown(
 <ul style="margin-left:20px;">
 <li><strong>Total respondents:</strong> {total_respondents}</li>
 <li><strong>Average sleep duration:</strong> {avg_sleep_hours:.1f} hours/night</li>
-<li><strong>Sleep environment comfort:</strong> Varies across groups, affecting concentration and side effects</li>
+<li><strong>Sleep environment comfort:</strong> Varies across groups, impacting concentration and side effects</li>
 </ul>
 <p>This summary highlights the main patterns of <strong>sleep duration, comfort, and negative outcomes</strong>.</p>
 </div>
@@ -34,12 +38,10 @@ st.markdown(
 
 st.divider()
 
-# --- Visualization 7 ---
-
 # --- Visualization 7: Comfort Ratings vs Average Sleep Hours ---
 with st.expander("🛌 Comfort Ratings vs Average Sleep Hours", expanded=True):
     grouped_comfort = df.groupby(
-        ['How many hours of sleep do you get on average per night?',
+        ['How many hours of sleep do you get on average per night?', 
          'How would you rate the comfort of your sleeping environment']
     ).size().reset_index(name='Count')
 
@@ -52,6 +54,7 @@ with st.expander("🛌 Comfort Ratings vs Average Sleep Hours", expanded=True):
             mode='lines+markers',
             name=f'{sleep_group} hours'
         ))
+
     fig7.update_layout(
         title='Comfort of Sleeping Environment vs Average Hours of Sleep',
         xaxis_title='Comfort Rating',
@@ -67,7 +70,7 @@ with st.expander("🤕 Average Sleep Hours vs Side Effects from Late Sleeping", 
     side_effects_df = df['Do you experience any of the following side effects from late sleeping?'].astype(str).str.get_dummies(sep=';')
     sleep_side_effects_df = pd.concat([df['How many hours of sleep do you get on average per night?'], side_effects_df], axis=1)
     sleep_side_effects_counts = sleep_side_effects_df.groupby('How many hours of sleep do you get on average per night?').sum()
-    
+
     fig8 = px.imshow(
         sleep_side_effects_counts,
         text_auto=True,
