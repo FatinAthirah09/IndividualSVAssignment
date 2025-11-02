@@ -15,43 +15,57 @@ The visualizations below highlight the **frequency and relationships** of major 
 
 st.divider()
 
-# --- 📊 Key Metrics Summary (Polished with st.metric) ---
+# --- 📊 Key Metrics Summary (Original Stylish HTML Cards Restored) ---
 st.header("📈 Key Prevalence Metrics")
 
 # --- Calculate Key Metrics ---
 total_respondents = len(df)
-# Calculate the number and percentage of respondents who have difficulty falling asleep
 sleep_diff_yes = df['Do you have difficulty falling asleep?'].str.lower().eq('yes').sum()
 sleep_diff_rate = (sleep_diff_yes / total_respondents * 100).round(1)
 
-# Find the most common concentration issue reported
 concentration_issues = df['How often do you find it hard to concentrate due to lack of sleep?'].value_counts()
 most_common_concentration = concentration_issues.idxmax()
-
-# Find the single most common reason for sleeping late across all respondents
 main_reason_col = df['What are the main reasons you sleep late?'].dropna().astype(str)
 top_reason = main_reason_col.str.split(';').explode().str.strip().value_counts().idxmax()
 
-# --- Streamlit Native Metric Cards ---
+# --- Stylish Metric Cards (ORIGINAL CODE RESTORED) ---
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    st.metric(
-        label="💤 Sleep Difficulty Prevalence",
-        value=f"{sleep_diff_rate}%",
-        help=f"{sleep_diff_yes} out of {total_respondents} respondents report difficulty falling asleep."
+    st.markdown(
+        f"""
+        <div style="background-color:#F3E5F5;padding:20px;border-radius:15px;text-align:center;
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <h4 style="color:#6A1B9A;">💤 Sleep Difficulty Prevalence</h4>
+            <h2 style="color:#4A148C;">{sleep_diff_rate}%</h2>
+            <p style="color:#6A1B9A;">of respondents report difficulty falling asleep</p>
+        </div>
+        """,
+        unsafe_allow_html=True
     )
 
 with col2:
-    st.metric(
-        label="🧠 Most Common Concentration Issue",
-        value=most_common_concentration
+    st.markdown(
+        f"""
+        <div style="background-color:#E0F7FA;padding:20px;border-radius:15px;text-align:center;
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <h4 style="color:#006064;">🧠 Common Concentration Issue</h4>
+            <h3 style="color:#004D40;">{most_common_concentration}</h3>
+        </div>
+        """,
+        unsafe_allow_html=True
     )
 
 with col3:
-    st.metric(
-        label="⏰ Top Reason for Sleeping Late",
-        value=top_reason
+    st.markdown(
+        f"""
+        <div style="background-color:#FFF8E1;padding:20px;border-radius:15px;text-align:center;
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <h4 style="color:#F57F17;">⏰ Top Reason for Sleeping Late</h4>
+            <h3 style="color:#E65100;">{top_reason}</h3>
+        </div>
+        """,
+        unsafe_allow_html=True
     )
 
 st.divider()
@@ -117,12 +131,12 @@ with st.expander("👪 Age-Related Sleep Delay Factors", expanded=True):
 st.divider()
 
 ## 🌟 Conclusion for Objective 2
-st.success("""
+st.success(f"""
 The analysis for Objective 2 highlights the **high prevalence of sleep disruption** and its clear connection to cognitive issues:
 
-* **Widespread Difficulty:** A significant portion of the survey population (specifically **{sleep_diff_rate}%**) reports difficulty falling asleep, indicating a common issue.
+* **Widespread Difficulty:** A significant portion of the survey population ({sleep_diff_rate}%) reports difficulty falling asleep, indicating a common issue.
 * **Concentration Link:** The visualizations confirm a strong association: respondents who report **difficulty falling asleep** are also the group most likely to report **frequent issues with concentration**.
-* **Age-Specific Factors:** The **reasons for sleeping late** vary by age, with **"social media/internet"** being a highly dominant factor across most groups. Understanding these age-specific drivers is crucial for targeted intervention.
+* **Age-Specific Factors:** The **reasons for sleeping late** vary by age, with **"{top_reason}"** being the most dominant factor overall. Understanding these age-specific drivers is crucial for targeted intervention.
 
 **Overall, sleep disruption is prevalent and is closely correlated with immediate negative cognitive outcomes, with technological distraction being a primary underlying cause.**
-""".format(sleep_diff_rate=sleep_diff_rate))
+""")
