@@ -14,25 +14,27 @@ This objective investigates **how sleep duration** and **sleep environment comfo
 The visualizations focus on **patterns of discomfort and negative outcomes** among different sleep groups.
 """)
 
-st.divider()
-
-# --- Summary Box ---
+# --- Summary Box (replace old one) ---
 avg_sleep_hours = pd.to_numeric(df['How many hours of sleep do you get on average per night?'], errors='coerce').mean()
 total_respondents = len(df)
 
-st.info(
+st.markdown(
     f"""
-💡 **Key Summary**
-
-- **Total respondents:** {total_respondents}
-- **Average sleep duration:** {avg_sleep_hours:.1f} hours/night
-- **Sleep environment comfort:** Varies across groups, affecting concentration and side effects
-
-This summary highlights the main patterns of **sleep duration, comfort, and negative outcomes**.
-"""
+<div style="background-color:#f0f4f8; padding:20px; border-radius:10px; border:1px solid #d3e0ea">
+<h4 style="color:#1f77b4; margin-bottom:10px;">💡 Key Summary</h4>
+<ul style="margin-left:20px;">
+<li><strong>Total respondents:</strong> {total_respondents}</li>
+<li><strong>Average sleep duration:</strong> {avg_sleep_hours:.1f} hours/night</li>
+<li><strong>Sleep environment comfort:</strong> Varies across groups, affecting concentration and side effects</li>
+</ul>
+<p>This summary highlights the main patterns of <strong>sleep duration, comfort, and negative outcomes</strong>.</p>
+</div>
+""", unsafe_allow_html=True
 )
 
 st.divider()
+
+# --- Visualization 7 ---
 
 # --- Visualization 7: Comfort Ratings vs Average Sleep Hours ---
 with st.expander("🛌 Comfort Ratings vs Average Sleep Hours", expanded=True):
